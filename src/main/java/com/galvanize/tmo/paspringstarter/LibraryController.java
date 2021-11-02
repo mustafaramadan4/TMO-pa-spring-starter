@@ -18,7 +18,11 @@ public class LibraryController {
     // Book book1 = new Book(10, "Mustafa", "title1", 1993);
     // Book book2 = new Book(11, "Ramadan", "title2", 1994);
     // Book book3 = new Book(12, "Author3", "title3", 1995);
-    private ArrayList<Book> allBooks = new ArrayList<>();
+    private ArrayList<Book> allBooks;
+
+    public LibraryController() {
+        allBooks = new ArrayList<>();
+    }
     
     
     // public ArrayList loadSampleData() {
