@@ -3,10 +3,12 @@ package com.galvanize.tmo.paspringstarter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.lang.Object;
 
 import javax.swing.text.Utilities;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.github.cliftonlabs.json_simple.JsonArray;
 
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
@@ -113,10 +115,14 @@ public class LibraryController {
     // Need to alphabataize the books
     @GetMapping("/api/books")
     @ResponseStatus(code = HttpStatus.OK)
-    public ArrayList<Book> getBooks() {
+    public JsonArray getBooks() {
         // allBooks = loadSampleData();
+
+
         allBooks.sort((a,b)->a.getTitle().compareTo(b.getTitle()));
-        return new ArrayList<>();
+        JsonArray copy = new JsonArray(allBooks);
+
+        return copy;
     }
 
     // Need to alphabataize the books
