@@ -116,7 +116,7 @@ public class LibraryController {
     public ArrayList<Book> getBooks() {
         // allBooks = loadSampleData();
         allBooks.sort((a,b)->a.getTitle().compareTo(b.getTitle()));
-        return allBooks;
+        return new ArrayList<>();
     }
 
     // Need to alphabataize the books
