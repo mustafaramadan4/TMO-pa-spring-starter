@@ -1,12 +1,22 @@
 package com.galvanize.tmo.paspringstarter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.text.Utilities;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,12 +51,64 @@ public class LibraryController {
     // Need to figure out what im doing with the ids
     @PostMapping("/api/books") 
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Book postBook(String author, String title, int yearPublished) {
+    public Book postBook(@RequestBody String input) {
+        StringBuilder sb = new StringBuilder();
+        for (char c: input.toCharArray()) {
+            if (c != '{' && c!= '}') {
+                sb.append(c);
+            }
+        }
+
+        String newString = sb.toString();
+        String[] array = newString.split(",");
+        
+        String author = array[0].split(":")[1];
+        StringBuilder newauthor = new StringBuilder();
+        for (char c: author.toCharArray()) {
+            if (c != '"') {
+                newauthor.append(c);
+            }
+        }
+
+        String title = array[1].split(":")[1];
+        StringBuilder newtitle = new StringBuilder();
+        for (char c: title.toCharArray()) {
+            if (c != '"') {
+                newtitle.append(c);
+            }
+        }
+
+        String yearPublished = array[2].split(":")[1];
+        StringBuilder newyear = new StringBuilder();
+        for (char c: yearPublished.toCharArray()) {
+            if (c != '"') {
+                newyear.append(c);
+            }
+        }
+
         currentId +=1;
-        Book newBook = new Book(currentId, author, title, yearPublished);
-        allBooks.add(newBook);
+
+        // int intYear = Integer.parseInt(year.toString());
+        Book newBook = new Book(currentId, newauthor.toString().trim(), newtitle.toString().trim(), Integer.parseInt(newyear.toString().trim()));
+        System.out.println(newBook.getAuthor());
+        System.out.println(newBook.getTitle());
+        System.out.println(newBook.getYearPublished());
+
+        // System.out.println(newBook.getYearPublished());
+
         return newBook;
+
+
+
+
+
+
+        // currentId += 1;
+        // Book newBook = new Book(currentId, author, title, yearPublished);
+        // allBooks.add(newBook);
+        // return newBook;
     }
+    
 
     // Need to alphabataize the books
     @GetMapping("/api/books")

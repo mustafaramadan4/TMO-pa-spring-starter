@@ -13,6 +13,14 @@ public class Book {
         this.yearPublished = yearPublished;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getYearPublished() {
         return yearPublished;
     }
@@ -25,9 +33,7 @@ public class Book {
         return author;
     }
 
-    public int getId() {
-        return id;
-    }
+  
 
     
 }
