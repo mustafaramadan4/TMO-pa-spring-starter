@@ -95,7 +95,7 @@ public class LibraryController {
         System.out.println(newBook.getYearPublished());
 
         // System.out.println(newBook.getYearPublished());
-
+        allBooks.add(newBook);
         return newBook;
 
 
