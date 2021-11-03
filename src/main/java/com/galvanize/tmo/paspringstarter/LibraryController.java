@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.lang.Object;
-
+import org.springframework.util.MimeType;
 import javax.swing.text.Utilities;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
 
+// import org.apache.tomcat.util.http.parser.MediaType;
 import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -113,16 +119,32 @@ public class LibraryController {
     
 
     // Need to alphabataize the books
-    @GetMapping("/api/books")
+    @GetMapping(path= "/api/books", produces=MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(code = HttpStatus.OK)
-    public JsonArray getBooks() {
+    public HashMap<String, ArrayList<Book>> getBooks() {
         // allBooks = loadSampleData();
-
+        
+        
 
         allBooks.sort((a,b)->a.getTitle().compareTo(b.getTitle()));
-        JsonArray copy = new JsonArray(allBooks);
+        // JsonArray copy = new JsonArray(allBooks);
+        // JSONObject finalJsonObj = new JSONObject();
+        String keyBooks = "books";
 
-        return copy;
+        HashMap<String, ArrayList<Book>> map = new HashMap<>();
+        map.put(keyBooks, allBooks);
+
+        return map;
+
+        // finalJsonObj.put(key, copy);
+        // // ResponseEntity<JSONObject> responseEntity = new ResponseEntity<>(finalJsonObj, HttpStatus.OK);
+        // ResponseEntity<JSONObject> responseEntity;
+        // responseEntity = new ResponseEntity<>(finalJsonObj, HttpStatus.OK);
+        // return responseEntity;
+        // return finalJsonObj;
+
+        
+
     }
 
     // Need to alphabataize the books
